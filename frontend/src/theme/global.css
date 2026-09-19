@@ -1,0 +1,49 @@
+@import "@fontsource/ibm-plex-sans/400.css";
+@import "@fontsource/ibm-plex-sans/500.css";
+@import "@fontsource/ibm-plex-sans/600.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+/* Mantine sets data-mantine-color-scheme on <html>; our own tokens key off
+   the same attribute so they always flip together, never independently. */
+:root {
+  --nasos-canvas: #eef0f3;
+  --nasos-surface: #ffffff;
+  --nasos-surface-raised: #f5f6f8;
+  --nasos-border: #dce0e6;
+  --nasos-text-primary: #1a1f27;
+  --nasos-text-secondary: #5b6472;
+  --nasos-chart-cpu: #2a78d6;
+  --nasos-chart-mem: #eb6834;
+
+  /* Status hues are fixed by design (theme/tokens.ts `statusColor`) — same
+     value in light and dark, so they read as the same signal everywhere. */
+  --nasos-status-good: #0ca30c;
+  --nasos-status-warning: #fab219;
+  --nasos-status-serious: #ec835a;
+  --nasos-status-critical: #d03b3b;
+}
+
+[data-mantine-color-scheme="dark"] {
+  --nasos-canvas: #10141a;
+  --nasos-surface: #1a1f27;
+  --nasos-surface-raised: #222833;
+  --nasos-border: #2e3542;
+  --nasos-text-primary: #e8ecf1;
+  --nasos-text-secondary: #8b96a5;
+  --nasos-chart-cpu: #3987e5;
+  --nasos-chart-mem: #d95926;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--nasos-canvas);
+  color: var(--nasos-text-primary);
+  overflow: hidden; /* the desktop shell owns scrolling within individual windows */
+}

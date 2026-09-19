@@ -1,0 +1,7 @@
+#%PAM-1.0
+# Used by the agent (python-pam, service="nasos") to authenticate GUI
+# logins — PLAN.md §3. Delegating to system-auth gets pam_faillock lockout
+# for free.
+auth        substack     system-auth
+account     include      system-auth
+password    substack     system-auth

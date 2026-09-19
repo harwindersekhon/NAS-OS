@@ -1,0 +1,12 @@
+[Unit]
+Description=NAS-OS agent RPC socket (dev)
+
+[Socket]
+ListenStream=/run/nasos/agent.sock
+SocketMode=0660
+SocketUser=root
+SocketGroup=@DEV_GROUP@
+Accept=no
+
+[Install]
+WantedBy=sockets.target

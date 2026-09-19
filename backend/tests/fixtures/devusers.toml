@@ -1,0 +1,11 @@
+[users.admin]
+password = "adminpass123"
+uid = 5000
+role = "admin"
+display_name = "Dev Admin"
+
+[users.alice]
+password = "alicepass123"
+uid = 5001
+role = "user"
+display_name = "Alice"

@@ -1,0 +1,17 @@
+# Seeded into backend/devdata/devusers.toml on first `make dev` / `make e2e`
+# (gitignored — devdata/ is scratch state, not source). Edit the copy freely;
+# this file is only the starting point. See PLAN.md §10 "Dev without
+# passwordless sudo": NASOS_MODE=dev replaces PAM + real Unix accounts with
+# this fixture.
+
+[users.admin]
+password = "adminpass123"
+uid = 5000
+role = "admin"
+display_name = "Dev Admin"
+
+[users.alice]
+password = "alicepass123"
+uid = 5001
+role = "user"
+display_name = "Alice"

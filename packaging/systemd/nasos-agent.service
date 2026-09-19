@@ -1,0 +1,26 @@
+[Unit]
+Description=NAS-OS privileged agent
+Documentation=https://github.com/nasos-project/nasos
+
+[Service]
+Type=notify
+ExecStart=/usr/libexec/nasos/nasos-agent
+Sockets=nasos-agent.socket
+Restart=on-failure
+RestartSec=2
+
+# Needs mount(2)/setuid/CAP_SYS_ADMIN for volume and fileworker management,
+# so no ProtectSystem=/NoNewPrivileges= here — see PLAN.md §1.
+PrivateTmp=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+LockPersonality=yes
+SystemCallArchitectures=native
+RuntimeDirectory=nasos nasos/workers
+RuntimeDirectoryPreserve=yes
+KillMode=mixed
+OOMScoreAdjust=-500
+
+[Install]
+WantedBy=multi-user.target
