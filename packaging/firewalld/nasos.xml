@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>NAS-OS</short>
+  <description>NAS-OS web management interface (HTTP redirect on 5000, HTTPS on 5001).</description>
+  <port protocol="tcp" port="5000"/>
+  <port protocol="tcp" port="5001"/>
+</service>

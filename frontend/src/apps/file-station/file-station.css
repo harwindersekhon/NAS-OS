@@ -1,0 +1,318 @@
+/* File Station (PLAN.md §5): tree sidebar, breadcrumb + toolbar, virtualized
+   grid, upload tray, properties/ACL/preview dialogs. Uses the same
+   --nasos-* tokens as the rest of the shell (theme/global.css) so it reads
+   as part of the same product, not a bolted-on app. */
+
+.nasos-file-station {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
+.nasos-file-station__sidebar {
+  flex: 0 0 200px;
+  overflow-y: auto;
+  padding: 10px 6px;
+  background: var(--nasos-surface-raised);
+  border-right: 1px solid var(--nasos-border);
+}
+
+.nasos-file-station__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nasos-file-station__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--nasos-border);
+  flex-wrap: wrap;
+}
+
+.nasos-file-station__breadcrumbs {
+  font-size: 13px;
+  min-width: 0;
+}
+
+.nasos-file-station__crumb {
+  appearance: none;
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  color: var(--nasos-text-secondary);
+  padding: 2px 4px;
+  border-radius: var(--mantine-radius-sm);
+}
+
+.nasos-file-station__crumb:last-of-type {
+  color: var(--nasos-text-primary);
+  font-weight: 500;
+}
+
+.nasos-file-station__crumb:hover {
+  background: var(--nasos-surface-raised);
+  color: var(--nasos-text-primary);
+}
+
+.nasos-file-station__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nasos-file-station__empty-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+/* --- Tree sidebar ------------------------------------------------------ */
+
+.nasos-file-tree__empty {
+  padding: 8px 10px;
+  font-size: 12.5px;
+  color: var(--nasos-text-secondary);
+}
+
+.nasos-file-tree__row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: var(--mantine-radius-sm);
+}
+
+.nasos-file-tree__row--active {
+  background: var(--nasos-surface);
+  box-shadow: inset 2px 0 0 var(--mantine-primary-color-filled);
+}
+
+.nasos-file-tree__row--active .nasos-file-tree__label {
+  color: var(--nasos-text-primary);
+}
+
+.nasos-file-tree__chevron,
+.nasos-file-tree__label {
+  appearance: none;
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  color: var(--nasos-text-secondary);
+}
+
+.nasos-file-tree__chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.nasos-file-tree__chevron svg {
+  transition: transform 120ms ease;
+}
+
+.nasos-file-tree__label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  min-width: 0;
+  padding: 4px 6px 4px 0;
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nasos-file-tree__label:hover {
+  color: var(--nasos-text-primary);
+}
+
+/* --- Grid --------------------------------------------------------------- */
+
+.nasos-file-grid {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+.nasos-file-grid--drop-target {
+  box-shadow: inset 0 0 0 2px var(--mantine-primary-color-filled);
+}
+
+.nasos-file-grid__header {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--nasos-surface);
+  border-bottom: 1px solid var(--nasos-border);
+}
+
+.nasos-file-grid__header-cell {
+  appearance: none;
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  padding: 7px 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--nasos-text-secondary);
+}
+
+.nasos-file-grid__col--name {
+  flex: 1;
+  min-width: 0;
+}
+
+.nasos-file-grid__col--size {
+  flex: 0 0 90px;
+}
+
+.nasos-file-grid__col--mtime {
+  flex: 0 0 170px;
+}
+
+.nasos-file-grid__col--actions {
+  flex: 0 0 40px;
+}
+
+.nasos-file-grid__empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--nasos-text-secondary);
+  font-size: 13px;
+}
+
+.nasos-file-grid__row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--nasos-border);
+  cursor: default;
+  user-select: none;
+}
+
+.nasos-file-grid__row:hover {
+  background: var(--nasos-surface-raised);
+}
+
+.nasos-file-grid__row--selected {
+  background: color-mix(in oklab, var(--mantine-primary-color-filled) 16%, var(--nasos-surface));
+}
+
+.nasos-file-grid__row--drop-target {
+  box-shadow: inset 0 0 0 2px var(--mantine-primary-color-filled);
+}
+
+.nasos-file-grid__cell {
+  padding: 0 10px;
+  font-size: 12.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.nasos-file-grid__name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Upload tray --------------------------------------------------------- */
+
+.nasos-upload-tray {
+  border-top: 1px solid var(--nasos-border);
+  background: var(--nasos-surface-raised);
+  max-height: 160px;
+  overflow-y: auto;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nasos-upload-tray__item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.nasos-upload-tray__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --- Properties dialog ---------------------------------------------------- */
+
+.nasos-properties__row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--nasos-border);
+  font-size: 12.5px;
+}
+
+.nasos-properties__row dt {
+  color: var(--nasos-text-secondary);
+}
+
+.nasos-properties__row dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* --- Preview dialog -------------------------------------------------------- */
+
+.nasos-file-preview__image {
+  max-width: 100%;
+  max-height: 60vh;
+  display: block;
+  margin: 0 auto;
+}
+
+.nasos-file-preview__media {
+  width: 100%;
+  max-height: 60vh;
+}
+
+.nasos-file-preview__audio {
+  width: 100%;
+}
+
+.nasos-file-preview__pdf {
+  width: 100%;
+  height: 60vh;
+  border: none;
+}
+
+.nasos-file-preview__text {
+  max-height: 60vh;
+  overflow: auto;
+  background: var(--nasos-canvas);
+  border: 1px solid var(--nasos-border);
+  border-radius: var(--mantine-radius-sm);
+  padding: 10px;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

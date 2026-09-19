@@ -1,0 +1,20 @@
+{{ header }}
+{% for share in shares %}
+[{{ share.name }}]
+    path = {{ share.path }}
+{% if share.valid_users %}
+    valid users = {{ share.valid_users | join(', ') }}
+{% endif %}
+{% if share.read_list %}
+    read list = {{ share.read_list | join(', ') }}
+{% endif %}
+{% if share.write_list %}
+    write list = {{ share.write_list | join(', ') }}
+{% endif %}
+    inherit acls = yes
+    create mask = 0777
+    directory mask = 0777
+    browseable = yes
+    guest ok = no
+
+{% endfor %}

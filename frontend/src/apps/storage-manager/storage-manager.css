@@ -1,0 +1,40 @@
+/* Storage Manager (PLAN.md §6, Milestone 4): disk inventory, volumes list,
+   and the create-volume plan/confirm flow. Uses the same --nasos-* tokens
+   as the rest of the shell (theme/global.css). */
+
+.nasos-storage-manager {
+  height: 100%;
+  overflow: auto;
+  padding: 18px 22px;
+}
+
+.nasos-storage-manager__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.nasos-storage-disk-row {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--nasos-border);
+}
+
+.nasos-storage-plan-steps {
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--nasos-border);
+  border-radius: var(--mantine-radius-sm);
+  padding: 8px 10px;
+  background: var(--nasos-canvas);
+}
+
+.nasos-storage-plan-step {
+  padding: 4px 0;
+}
+
+.nasos-storage-plan-argv {
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--nasos-text-secondary);
+}

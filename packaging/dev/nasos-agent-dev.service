@@ -1,0 +1,28 @@
+[Unit]
+Description=NAS-OS privileged agent (dev)
+
+[Service]
+Type=notify
+ExecStart=@REPO_ROOT@/backend/.venv/bin/nasos-agent --dev
+Sockets=nasos-agent-dev.socket
+Environment=NASOS_MODE=dev
+Environment=NASOS_DEVUSERS_FILE=@REPO_ROOT@/backend/devdata/devusers.toml
+Restart=on-failure
+RestartSec=2
+
+# --dev trusts the invoking developer's uid instead of the nasos service
+# account (PLAN.md §1/§10); the NASOS_DEV_DISKS destructive-op allowlist
+# arrives with Storage Manager (Milestone 4) — until then this agent has no
+# destructive storage RPCs to guard.
+PrivateTmp=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+LockPersonality=yes
+SystemCallArchitectures=native
+RuntimeDirectory=nasos nasos/workers
+RuntimeDirectoryPreserve=yes
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target

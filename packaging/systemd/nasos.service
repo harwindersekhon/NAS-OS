@@ -1,0 +1,41 @@
+[Unit]
+Description=NAS-OS web UI
+Documentation=https://github.com/nasos-project/nasos
+Requires=nasos-agent.socket
+After=network-online.target nasos-agent.socket
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nasos
+Group=nasos
+SupplementaryGroups=systemd-journal
+ExecStart=/usr/libexec/nasos/nasos-web
+Restart=on-failure
+RestartSec=2
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+CapabilityBoundingSet=
+AmbientCapabilities=
+StateDirectory=nasos
+LogsDirectory=nasos
+RuntimeDirectory=nasos/web
+ReadOnlyPaths=/etc/nasos
+
+[Install]
+WantedBy=multi-user.target
